@@ -3,16 +3,15 @@ import axios from 'axios';
 
 // Production-ready API URL configuration
 const getAPIBaseURL = () => {
-  // Check if we're in production (deployed)
-  if (process.env.NODE_ENV === 'production' || process.env.REACT_APP_API_URL) {
-    // Use your working backend URL
-    return process.env.REACT_APP_API_URL || 'https://charusat-backend-37huqgz6x-rushal-valanis-projects.vercel.app';
+  // Prefer an explicit REACT_APP_API_URL (works for production and hosted builds)
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
   }
-  
-  // Local development logic
+
+  // Local development fallback
   const hostname = window.location.hostname;
   const port = '5000';
-  
+
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     return `http://localhost:${port}`;
   } else {
